@@ -10,6 +10,10 @@
                 "no" => elgg_echo("option:no"),
                 "yes" => elgg_echo("option:yes")
         );
+	
+	$mainpage_title = elgg_get_plugin_setting("mainpage_title","metatags");
+	$mainpage_description = elgg_get_plugin_setting("mainpage_description","metatags");
+	$mainpage_image = elgg_get_plugin_setting("mainpage_image","metatags");
 
 	if(empty($mainpage_title)) {
 	$mainpage_title = elgg_get_site_entity()->name ." - Social Network";
@@ -30,3 +34,7 @@
         echo '<br><br>';
         echo elgg_echo('metatags:mainpage:description');
         echo elgg_view('input/text', array('name'=>'params[mainpage_description]', 'value'=>$mainpage_description));
+	echo '<br><br>';
+        echo elgg_echo('metatags:mainpage:image');
+        echo elgg_view('input/text', array('name'=>'params[mainpage_image]', 'value'=>$mainpage_image));
+

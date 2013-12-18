@@ -171,9 +171,13 @@ if($meta_description) { ?>
 <meta property="og:site_name" content="<?php echo $site_name; ?>" />
 <meta property="og:title" content="<?php echo trim($title); ?>" />
 <meta property="og:url" content="<?php echo full_url(); ?>" />
-<meta property="og:image" content="<?php if (!empty($user->name)) {
+<meta property="og:image" content="<?php if(!empty($user->name) && ($context != 'index')) {
    echo $user->getIconURL('large');
-   } ?>" />
+   } else {
+   $mainpage_image = elgg_get_plugin_setting("mainpage_image","metatags");
+   echo elgg_get_site_url() . "_graphics/". $mainpage_image;
+   }
+   ?>" />
 <link rel="author" href="<?php echo $user->website; ?>"/>
 <meta name="keywords" content="<?php if($context !== index) {
       echo $context,",",$CONFIG->tagsg,",", $user->name,",", $user->location;
