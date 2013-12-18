@@ -163,7 +163,7 @@ if($meta_description) { ?>
 <?php } ?>
 <title><?php echo $title;?></title>
 <meta name="author" content="<?php if(empty($user->name)) {
-	echo "$site_name social network";
+	echo $site_name;
         } else {
         echo $user->name;
         }
