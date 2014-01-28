@@ -14,14 +14,20 @@
 	$mainpage_title = elgg_get_plugin_setting("mainpage_title","metatags");
 	$mainpage_description = elgg_get_plugin_setting("mainpage_description","metatags");
 	$mainpage_image = elgg_get_plugin_setting("mainpage_image","metatags");
+	$mainpage_keywords = elgg_get_plugin_setting("mainpage_keywords","metatags");
 
 	if(empty($mainpage_title)) {
-	$mainpage_title = elgg_get_site_entity()->name ." - Social Network";
+		$mainpage_title = elgg_get_site_entity()->name ." - Social Network";
 	}
 
 	if(empty($mainpage_description)) {
-	$mainpage_description = elgg_get_site_entity()->name ." is a Social Network for people with interest in ....";
+		$mainpage_description = elgg_get_site_entity()->name ." is a Social Network for people with interest in ....";
 	}
+
+        if(empty($mainpage_keywords)) {
+	        $mainpage_description = "social network,";
+        }
+
 
 	$cloudflare  = $vars['entity']->cloudflare;
 
@@ -34,6 +40,9 @@
         echo '<br><br>';
         echo elgg_echo('metatags:mainpage:description');
         echo elgg_view('input/text', array('name'=>'params[mainpage_description]', 'value'=>$mainpage_description));
+        echo '<br><br>';
+        echo elgg_echo('metatags:mainpage:keywords');
+        echo elgg_view('input/text', array('name'=>'params[mainpage_keywords]', 'value'=>$mainpage_keywords));
 	echo '<br><br>';
         echo elgg_echo('metatags:mainpage:image');
         echo elgg_view('input/text', array('name'=>'params[mainpage_image]', 'value'=>$mainpage_image));

@@ -168,6 +168,7 @@ if($meta_description) { ?>
         echo $user->name;
         }
 ?>" />
+<html prefix="og: http://ogp.me/ns#">
 <meta property="og:site_name" content="<?php echo $site_name; ?>" />
 <meta property="og:title" content="<?php echo trim($title); ?>" />
 <meta property="og:url" content="<?php echo full_url(); ?>" />
@@ -182,5 +183,5 @@ if($meta_description) { ?>
 <meta name="keywords" content="<?php if($context !== index) {
       echo $context,",",$CONFIG->tagsg,",", $user->name,",", $user->location;
    } else {
-      echo "social network,join,register,login";
+      echo elgg_get_plugin_setting("mainpage_title","metatags");
    }?>" />
