@@ -21,11 +21,11 @@
 	}
 
 	if(empty($mainpage_description)) {
-		$mainpage_description = elgg_get_site_entity()->name ." is a Social Network for people with interest in ....";
+		$mainpage_description = elgg_get_site_entity()->name ." is a social network for people with interest in ....";
 	}
 
         if(empty($mainpage_keywords)) {
-	        $mainpage_description = "social network,";
+	        $mainpage_keywords = "social network,join,register,members,". elgg_get_site_entity()->name;
         }
 
 

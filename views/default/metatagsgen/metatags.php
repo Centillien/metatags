@@ -16,10 +16,12 @@ $user = elgg_get_page_owner_entity();
 global $my_page_entity;
 $offset = sanitise_int(get_input("offset", 0), false);
 
+
 switch ($context) {
 	case(empty($vars['title'])):
         $title = elgg_get_plugin_setting("mainpage_title","metatags");
         $meta_description =  elgg_get_plugin_setting("mainpage_description","metatags"); 
+	$meta_description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($meta_description))))));
         break;
         break;
 	case 'groups':
@@ -158,6 +160,7 @@ switch ($context) {
         break;
 }
 
+$contexts = array('front','index','main','null','');
 if($meta_description) { ?>  
 <meta name="description" property="og:description" content="<?php echo strip_tags($meta_description);?>" />
 <?php } ?>
@@ -172,7 +175,7 @@ if($meta_description) { ?>
 <meta property="og:site_name" content="<?php echo $site_name; ?>" />
 <meta property="og:title" content="<?php echo trim($title); ?>" />
 <meta property="og:url" content="<?php echo full_url(); ?>" />
-<meta property="og:image" content="<?php if(!empty($user->name) && ($context != 'index')) {
+<meta property="og:image" content="<?php if(!empty($user->name) && !in_array($context, $contexts)) {
    echo $user->getIconURL('large');
    } else {
    $mainpage_image = elgg_get_plugin_setting("mainpage_image","metatags");
@@ -180,8 +183,9 @@ if($meta_description) { ?>
    }
    ?>" />
 <link rel="author" href="<?php echo $user->website; ?>"/>
-<meta name="keywords" content="<?php if($context !== index) {
+<meta name="robots" content="index,follow" />
+<meta name="keywords" content="<?php if(!in_array($context, $contexts)) {
       echo $context,",",$CONFIG->tagsg,",", $user->name,",", $user->location;
    } else {
-      echo elgg_get_plugin_setting("mainpage_title","metatags");
+      echo elgg_get_plugin_setting("mainpage_keywords","metatags");
    }?>" />
