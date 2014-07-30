@@ -5,6 +5,7 @@
          *
          * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
          * @author Gerard Kanters
+         * Website: https://www.centillien.com
          */
 
 
@@ -15,6 +16,7 @@ $title = urldecode(html_entity_decode(strip_tags($title)));
 $user = elgg_get_page_owner_entity();
 global $my_page_entity;
 $offset = sanitise_int(get_input("offset", 0), false);
+$tags = implode(",", $my_page_entity->tags);
 
 
 switch ($context) {
@@ -87,12 +89,12 @@ switch ($context) {
 	break;
 	case 'blog':
         if(!empty($user->name)) {
-        $meta_description = urldecode(html_entity_decode(strip_tags($my_page_entity->excerpt)));
-        $meta_description = str_replace(array("\r", "\n"), '', $meta_description);
-        $title = $title ." from ". $user->name ." - ". $user->location;
+        	$meta_description = urldecode(html_entity_decode(strip_tags($my_page_entity->excerpt)));
+        	$meta_description = str_replace(array("\r", "\n"), '', $meta_description);
+        	$title = $title ." from ". $user->name ." - ". $user->location;
         }else{
-        $meta_description = $site_name ." Blogs. This page provides a partial list of all blogs and has relevancy with these words: ". $CONFIG->tagsg;
-        $title = $title ." - ". $site_name;
+        	$meta_description = $site_name ." Blogs. This page provides a partial list of all blogs";
+        	$title = $title ." - ". $site_name;
         }
         break;
 	case 'market':
@@ -174,7 +176,7 @@ if($meta_description) { ?>
 <html prefix="og: http://ogp.me/ns#">
 <meta property="og:site_name" content="<?php echo $site_name; ?>" />
 <meta property="og:title" content="<?php echo trim($title); ?>" />
-<meta property="og:url" content="<?php echo full_url(); ?>" />
+<meta property="og:url" content="<?php echo current_page_url(); ?>" />
 <meta property="og:image" content="<?php if(!empty($user->name) && !in_array($context, $contexts)) {
    echo $user->getIconURL('large');
    } else {
@@ -184,8 +186,9 @@ if($meta_description) { ?>
    ?>" />
 <link rel="author" href="<?php echo $user->website; ?>"/>
 <meta name="robots" content="index,follow" />
-<meta name="keywords" content="<?php if(!in_array($context, $contexts)) {
-      echo $context,",",$CONFIG->tagsg,",", $user->name,",", $user->location;
+<meta name="keywords" content="<?php if($tags && !in_array($context, $contexts)) {
+      echo $context,",",$tags,",", $user->name,",", $user->location;
    } else {
       echo elgg_get_plugin_setting("mainpage_keywords","metatags");
    }?>" />
+
