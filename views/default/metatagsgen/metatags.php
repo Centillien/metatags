@@ -125,7 +125,7 @@ switch ($context) {
         case 'friends':
         $options = array(
         'relationship' => 'friend',
-        'relationship_guid' => $owner->getGUID(),
+        'relationship_guid' => $user->getGUID(),
         'inverse_relationship' => FALSE,
         'limit' => false,
         'type' => 'user',
