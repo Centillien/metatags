@@ -20,84 +20,84 @@ $tags = implode(",", $my_page_entity->tags);
 
 
 switch ($context) {
-        case(empty($vars['title'])):
+	case(empty($vars['title'])):
         $title = elgg_get_plugin_setting("mainpage_title","metatags");
-        $meta_description =  elgg_get_plugin_setting("mainpage_description","metatags");
-        $meta_description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($meta_description))))));
+        $meta_description =  elgg_get_plugin_setting("mainpage_description","metatags"); 
+	$meta_description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($meta_description))))));
         break;
         break;
-        case 'groups':
-        $title = $title ." - " . $site_name ." - Networking Groups";
-        break;
-        case 'bookmarks':
-        if(!empty($user->name)) {
-        $clear = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
+	case 'groups':
+	$title = $title ." - " . $site_name ." - Networking Groups";
+	break;
+	case 'bookmarks':
+	if(!empty($user->name)) {
+	$clear = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
         $meta_description = substr($clear,0,200);
         $meta_description = str_replace(array("\r", "\n"), '', $meta_description);
         $title = $title ." from ". $user->name ." - ". $user->location;
         }else{
-        $meta_description = "Bookmarks on ". $site_name ." You can use this to share interesting links with other people or friends or just for yourself";
-        $title = $title ." - ". $site_name . " - Bookmarks";
-        }
-        break;
-        case 'members':
-                switch($title) {
-                      case 'Popular Members':
-                        $options['relationship'] = 'friend';
-                        $options['inverse_relationship'] = false;
-                        $options['offset'] = $offset;
-                        $options['limit'] = 10;
-                        $users = elgg_get_entities_from_relationship_count($options);
-                        $meta_description = "Positions ". $offset . " - ". (10 + $offset) .": ";
-                        foreach($users as $u){
-                                $u->name = str_replace(',', "", $u->name);
-                                $meta_description = $meta_description ."". $u->name .", ";
-                                }
-                        $title = $title ." - ". $site_name . " - Social Network";
-                        break;
-                }
-        break;
-        case 'profile':
-        switch($user) {
-                case(empty($user->name)):
-                $meta_description = $title ." - " . elgg_get_plugin_setting("mainpage_description","metatags");
-                $title = $title ." - " . elgg_get_plugin_setting("mainpage_title","metatags");
-                break;
-                case(empty($user->description)):
-                $briefdescription = urldecode(html_entity_decode(strip_tags($user->briefdescription)));
-                $briefdescription = str_replace(array("\r", "\n"), '', $briefdescription);
-                $meta_description = substr($briefdescription,0,150) ." - ". $user->name . " is a registered member on $site_name";
-                $title = $user->name ." - ". $user->location;
-                break;
+	$meta_description = "Bookmarks on ". $site_name ." You can use this to share interesting links with other people or friends or just for yourself";
+	$title = $title ." - ". $site_name . " - Bookmarks";
+	}
+	break;
+	case 'members':
+		switch($title) {
+		      case 'Popular Members':
+        		$options['relationship'] = 'friend';
+       			$options['inverse_relationship'] = false;
+        		$options['offset'] = $offset;
+        		$options['limit'] = 10;
+        		$users = elgg_get_entities_from_relationship_count($options);
+        		$meta_description = "Positions ". $offset . " - ". (10 + $offset) .": ";
+        		foreach($users as $u){
+               			$u->name = str_replace(',', "", $u->name);
+                		$meta_description = $meta_description ."". $u->name .", ";
+        			}
+        		$title = $title ." - ". $site_name . " - Social Network";
+        		break;
+		}
+	break;
+	case 'profile':
+	switch($user) {
+		case(empty($user->name)):
+	        $meta_description = $title ." - " . elgg_get_plugin_setting("mainpage_description","metatags");
+        	$title = $title ." - " . elgg_get_plugin_setting("mainpage_title","metatags");
+        	break;	
+		case(empty($user->description)):
+      		$briefdescription = urldecode(html_entity_decode(strip_tags($user->briefdescription)));
+        	$briefdescription = str_replace(array("\r", "\n"), '', $briefdescription);
+        	$meta_description = substr($briefdescription,0,150) ." - ". $user->name . " is a registered member on $site_name";
+		$title = $user->name ." - ". $user->location;
+		break;
+		$description = urldecode(html_entity_decode(strip_tags($user->description)));
+                $description = str_replace(array("\r", "\n"), '', $description);
+                $meta_description = substr($description,0,133) ." - ". $user->name . " is a registered member on $site_name";
+		$title = $user->name ." - ". $user->location;
+        	break;
+		case (!empty($user->description)):
                 $description = urldecode(html_entity_decode(strip_tags($user->description)));
                 $description = str_replace(array("\r", "\n"), '', $description);
                 $meta_description = substr($description,0,133) ." - ". $user->name . " is a registered member on $site_name";
-                $title = $user->name ." - ". $user->location;
+		$title = $user->name ." - ". $user->location;
                 break;
-                case (!empty($user->description)):
-                $description = urldecode(html_entity_decode(strip_tags($user->description)));
-                $description = str_replace(array("\r", "\n"), '', $description);
-                $meta_description = substr($description,0,133) ." - ". $user->name . " is a registered member on $site_name";
-                $title = $user->name ." - ". $user->location;
-                break;
-                case (!empty($user->briefdescription)):
-                $briefdescription = urldecode(html_entity_decode(strip_tags($user->briefdescription)));
-                $briefdescription = str_replace(array("\r", "\n"), '', $briefdescription);
-                $meta_description = substr($briefdescription,0,133) ." - ". $user->name . " is a registered member on $site_name";
-                break;
-        }
-        break;
-        case 'blog':
+	        case (!empty($user->briefdescription)):
+	        $briefdescription = urldecode(html_entity_decode(strip_tags($user->briefdescription)));
+	        $briefdescription = str_replace(array("\r", "\n"), '', $briefdescription);
+	        $meta_description = substr($briefdescription,0,133) ." - ". $user->name . " is a registered member on $site_name";
+	       	break;
+	}
+	break;
+	case 'blog':
         if(!empty($user->name)) {
-                $meta_description = urldecode(html_entity_decode(strip_tags($my_page_entity->excerpt)));
-                $meta_description = str_replace(array("\r", "\n"), '', $meta_description);
-                $title = $title ." from ". $user->name ." - ". $user->location;
+        	$meta_description = urldecode(html_entity_decode(strip_tags($my_page_entity->excerpt)));
+        	$meta_description = str_replace(array("\r", "\n"), '', $meta_description);
+        	$title = $title ." from ". $user->name ." - ". $user->location;
         }else{
-                $meta_description = $site_name ." Blogs. This page provides a partial list of all blogs";
-                $title = $title ." - ". $site_name;
+        	$meta_description = $site_name ." Blogs. This page provides a partial list of all blogs";
+        	$title = $title ." - ". $site_name;
         }
         break;
-        case 'market':
+	case 'market':
         if(!empty($user->name)) {
         $meta_description =  elgg_get_excerpt($my_page_entity->description);
         $meta_description = urldecode(html_entity_decode(strip_tags($meta_description)));
@@ -109,33 +109,33 @@ switch ($context) {
         $title = $title ." - ". $site_name ." Social Network";
         }
         break;
-        case 'thewire':
-        if(!empty($user->name)) {
-        $title = $title . " - ". $user->location;
+	case 'thewire':
+	if(!empty($user->name)) {
+	$title = $title . " - ". $user->location;
         $message = "these short messages";
-        $meta_description= $user->name ." wants to share ". $message ." with you on $site_name";
-        }else{
+	$meta_description= $user->name ." wants to share ". $message ." with you on $site_name";
+	}else{
         $meta_description = "$site_name microblogs. This page provides a small list of all short messages of max 140 characters that members published";
         $title = $title ." - $site_name - Business Social Network";
         }
         break;
-        case 'group_profile':
-        $meta_description= $user->name ." is a group on $site_name. If you want to join this group, you need to register on $site_name";
+	case 'group_profile':
+	$meta_description= $user->name ." is a group on $site_name. If you want to join this group, you need to register on $site_name";
         break;
-        case 'friends':
-        $options = array(
+ 	case 'friends':
+	$options = array(
         'relationship' => 'friend',
         'relationship_guid' => $user->getGUID(),
         'inverse_relationship' => FALSE,
         'limit' => false,
         'type' => 'user',
         'full_view' => FALSE
-        );
-        $num_friends = count(elgg_get_entities_from_relationship($options));
-        $options['offset'] = $offset;
+	);
+	$num_friends = count(elgg_get_entities_from_relationship($options));
+	$options['offset'] = $offset;
         $options['limit'] = 7;
         $friends = elgg_get_entities_from_relationship($options);
-         if($friends){
+	 if($friends){
         $meta_description =  $user->name ." has ". $num_friends ."  friends on $site_name. Maybe you also know ". $user->name ." or ";
         foreach($friends as $u){
                 $u->name = str_replace(',', "", $u->name);
@@ -145,16 +145,16 @@ switch ($context) {
         $meta_description =  $user->name ." has no friends yet on $site_name. Maybe you are a friend of ". $user->name .". Join $site_name and get connected";
         }
         $title = $title ." - $site_name - Social Network";
-        break;
-        case (empty($user->name)):
+	break;
+	case (empty($user->name)):
         $meta_description = $title ." - " . elgg_get_plugin_setting("mainpage_description","metatags");
         $title = $title ." - ". elgg_get_plugin_setting("mainpage_title","metatags");;
         break;
-        default:
+	default:
         $clear = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
         $meta_description = substr($clear,0,200);
-        $meta_description = str_replace(array("\r", "\n"), '', $meta_description);
-        if($user->location) {
+	$meta_description = str_replace(array("\r", "\n"), '', $meta_description);
+	if($user->location) {
         $title = $title ." - ". $user->name . " - ". $user->location;
         }else{
         $title = $title ." - ". $user->name;
@@ -163,12 +163,12 @@ switch ($context) {
 }
 
 $contexts = array('front','index','main','null','');
-if($meta_description) { ?>
+if($meta_description) { ?>  
 <meta name="description" property="og:description" content="<?php echo strip_tags($meta_description);?>" />
 <?php } ?>
 <title><?php echo $title;?></title>
 <meta name="author" content="<?php if(empty($user->name)) {
-        echo $site_name;
+	echo $site_name;
         } else {
         echo $user->name;
         }
@@ -191,4 +191,4 @@ if($meta_description) { ?>
    } else {
       echo elgg_get_plugin_setting("mainpage_keywords","metatags");
    }?>" />
-   
+

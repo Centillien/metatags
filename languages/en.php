@@ -7,9 +7,9 @@
 
 $english = array(
 	//Mainpage settings
-	'metatags:mainpage:title' => 'Provide a catching title for the index page',
-	'metatags:mainpage:keywords' => 'Provide some keywords that would describe your site and are mentioned on the homepage',
-	'metatags:mainpage:description' => 'Provide a catching description for your network. Tip, use existing words that are on the main page for better results',
+	'metatags:mainpage:title' => 'Provide a catchy title for the index page',
+	'metatags:mainpage:keywords' => 'Provide some keywords that would describe your site. They will be used for the frontpage',
+	'metatags:mainpage:description' => 'Provide a catching description for your site. Tip, use existing words that are on the main page for better results',
 	'metatags:mainpage:image' => 'Give the filename of an image that represents your site. This file must located be in the folder /_graphics',
 	'metatags:cloudflare' => 'Do you want fixed avatar URLs ?',
 
