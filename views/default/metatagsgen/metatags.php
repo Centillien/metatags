@@ -191,3 +191,4 @@ if($meta_description) { ?>
    } else {
       echo elgg_get_plugin_setting("mainpage_keywords","metatags");
    }?>" />
+   
