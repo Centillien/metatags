@@ -11,6 +11,7 @@ $page      = get_entity(get_input('guid'));
 $site_name = elgg_get_site_entity()->name;
 $context   = elgg_get_context();
 $title     = urldecode(html_entity_decode(strip_tags($title)));
+$title     = str_replace('"',"'",$title);
 $user      = elgg_get_page_owner_entity();
 global $my_page_entity;
 $offset = sanitise_int(get_input("offset", 0), false);
