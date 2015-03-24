@@ -49,13 +49,12 @@ function user_icon_url_override($hook, $type, $returnvalue, $params) {
 
 function group_icon_url_override($hook, $type, $returnvalue, $params) {
 
-	/* @var CentillienGroup $group */
 	$group = $params['entity'];
 	$size = $params['size'];
 
 	$icontime = $group->icontime;
 	if (null === $icontime) {
-		$file = new CentillienFile();
+		$file = new ElggFile();
 		$file->owner_guid = $group->owner_guid;
 		$file->setFilename("groups/" . $group->guid . "large.jpg");
 		$icontime = $file->exists() ? time() : 0;
