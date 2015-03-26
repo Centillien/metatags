@@ -15,7 +15,20 @@ $title     = str_replace('"',"'",$title);
 $user      = elgg_get_page_owner_entity();
 global $my_page_entity;
 $offset = sanitise_int(get_input("offset", 0), false);
-$tags   = implode(",", $my_page_entity->tags);
+if(isset($my_page_entity->tags)){
+        $tags_array=(array)$my_page_entity->tags;
+        if(!empty($tags_array)) {
+                $tags = implode(",", $my_page_entity->tags);
+        }
+}else{
+        if(($page->tags) && ($context != 'profile')){
+        $tags_array=(array)$my_page_entity->tags;
+                if(!empty($tags_array)) {
+                        $tags = implode(",", $page->tags);
+                }
+        }
+}
+
 
 switch ($context) {
     case (empty($vars['title'])):
