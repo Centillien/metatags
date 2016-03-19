@@ -154,28 +154,30 @@ switch ($context) {
         $meta_description = $user->name . " is a group on $site_name. If you want to join this group, you need to register on $site_name";
         break;
     case 'friends':
-        $options           = array(
-            'relationship' => 'friend',
-            'relationship_guid' => $user->getGUID(),
-            'inverse_relationship' => FALSE,
-            'limit' => false,
-            'type' => 'user',
-            'full_view' => FALSE
-        );
-        $num_friends       = count(elgg_get_entities_from_relationship($options));
-        $options['offset'] = $offset;
-        $options['limit']  = 7;
-        $friends           = elgg_get_entities_from_relationship($options);
-        if ($friends) {
-            $meta_description = $user->name . " has " . $num_friends . "  friends on $site_name. Maybe you also know " . $user->name . " or ";
-            foreach ($friends as $u) {
-                $u->name          = str_replace(',', "", $u->name);
-                $meta_description = $meta_description . "" . $u->name . ", ";
-            }
-        } else {
-            $meta_description = $user->name . " has no friends yet on $site_name. Maybe you are a friend of " . $user->name . ". Join $site_name and get connected";
+       if (!empty($user->name)) {
+                $options           = array(
+                    'relationship' => 'friend',
+                    'relationship_guid' => $user->getGUID(),
+                    'inverse_relationship' => FALSE,
+                    'limit' => false,
+                    'type' => 'user',
+                    'full_view' => FALSE
+                );
+                $num_friends       = count(elgg_get_entities_from_relationship($options));
+                $options['offset'] = $offset;
+                $options['limit']  = 7;
+                $friends           = elgg_get_entities_from_relationship($options);
+                if ($friends) {
+                    $meta_description = $user->name . " has " . $num_friends . "  friends on $site_name. Maybe you also know " . $user->name . " or ";
+                    foreach ($friends as $u) {
+                        $u->name          = str_replace(',', "", $u->name);
+                        $meta_description = $meta_description . "" . $u->name . ", ";
+                    }
+                } else {
+                    $meta_description = $user->name . " has no friends yet on $site_name. Maybe you are a friend of " . $user->name . ". Join $site_name and get connected";
+                }
+                $title = $title . " - $site_name - Social Network";
         }
-        $title = $title . " - $site_name - Social Network";
         break;
     case (empty($user->name)):
         $meta_description = $title . " - " . elgg_get_plugin_setting("mainpage_description", "metatags");
