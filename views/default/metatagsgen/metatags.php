@@ -207,7 +207,10 @@ $contexts = array(
 if ($meta_description) {
 ?>  
 <meta name="description" property="og:description" content="<?php
-    echo strip_tags($meta_description);
+if (strpos($title,' - ') == 0) {
+    $meta_description = str_replace(' - ', '', $meta_description);
+}
+echo $meta_description;
 ?>" />
 <?php
 }
