@@ -223,11 +223,16 @@ if (empty($user->name)) {
 }
 ?>" />
 <html prefix="og: http://ogp.me/ns#">
+<meta property="og:type" content="article" />
 <meta property="og:site_name" content="<?php
 echo $site_name;
 ?>" />
 <meta property="og:title" content="<?php
-echo trim($title);
+$title = trim($title);
+if (strpos($title,'- ') == 0) {
+    $title = str_replace('- ', '', $title);
+}
+echo $title;
 ?>" />
 <meta property="og:url" content="<?php
 echo current_page_url();
