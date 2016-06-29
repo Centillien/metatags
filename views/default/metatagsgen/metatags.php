@@ -241,10 +241,12 @@ echo $title;
 echo current_page_url();
 ?>" />
 <meta property="og:image" content="<?php
+$mainpage_image = elgg_get_plugin_setting("mainpage_image", "metatags");
 if (!empty($user->name) && !in_array($context, $contexts)) {
     echo $user->getIconURL('large');
+} else if (strpos($mainpage_image,'://') !== false) {
+    echo $mainpage_image;
 } else {
-    $mainpage_image = elgg_get_plugin_setting("mainpage_image", "metatags");
     echo elgg_get_site_url() . "_graphics/" . $mainpage_image;
 }
 ?>" />
