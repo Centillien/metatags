@@ -180,8 +180,8 @@ switch ($context) {
         }
         break;
     case (empty($user->name)):
-        $meta_description = $title . " - " . elgg_get_plugin_setting("mainpage_description", "metatags");
-        $title            = $title . " - " . elgg_get_plugin_setting("mainpage_title", "metatags");;
+        $meta_description = $site_name . " - " . elgg_get_plugin_setting("mainpage_description", "metatags");
+        $title            = $site_name . " - " . elgg_get_plugin_setting("mainpage_title", "metatags");;
         break;
     default:
         $clear            = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
