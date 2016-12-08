@@ -22,8 +22,8 @@
 		//Static caching of icons
 		$cloudflare = elgg_get_plugin_setting("cloudflare","metatags");
 	        if($cloudflare == "yes") {
-			elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_icon_url_override');
-			elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'group_icon_url_override');
+			elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'metatags_user_icon_url_override');
+			elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'metatags_group_icon_url_override');
 		}
 		
 		//Unregister systemlog since it is not very usefull	 
@@ -31,7 +31,7 @@
 
 }
 
-function user_icon_url_override($hook, $type, $returnvalue, $params) {
+function metatags_user_icon_url_override($hook, $type, $returnvalue, $params) {
      $user = $params['entity'];
      $size = $params['size'];
 
@@ -47,7 +47,7 @@ function user_icon_url_override($hook, $type, $returnvalue, $params) {
      }
 }
 
-function group_icon_url_override($hook, $type, $returnvalue, $params) {
+function metatags_group_icon_url_override($hook, $type, $returnvalue, $params) {
 
 	$group = $params['entity'];
 	$size = $params['size'];
