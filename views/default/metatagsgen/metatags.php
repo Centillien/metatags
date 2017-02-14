@@ -10,7 +10,7 @@
 $page = get_entity(get_input('guid'));
 $site_name = elgg_get_site_entity()->name;
 $context = elgg_get_context();
-$title = $vars['title'];
+$title = str_replace(elgg_get_config('sitename'), '', str_replace(' : ', '', $vars['title']));
 $user = elgg_get_page_owner_entity();
 global $my_page_entity;
 $offset = sanitise_int(get_input("offset", 0), false);
@@ -82,14 +82,6 @@ switch ($context) {
                     "\n"
                 ), '', $briefdescription);
                 $meta_description = substr($briefdescription, 0, 150) . " - " . $user->name . " is a registered member on $site_name";
-                $title = $user->name . " - " . $user->location;
-                break;
-                $description = urldecode(html_entity_decode(strip_tags($user->description)));
-                $description = str_replace(array(
-                    "\r",
-                    "\n"
-                ), '', $description);
-                $meta_description = substr($description, 0, 133) . " - " . $user->name . " is a registered member on $site_name";
                 $title = $user->name . " - " . $user->location;
                 break;
             case (!empty($user->description)):
