@@ -27,7 +27,8 @@
 		
 		//Unregister systemlog since it is not very usefull	 
 		elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
-
+		
+		elgg_register_plugin_hook_handler('view_vars', 'all', 'metatags_view_guid');
 }
 
 function metatags_user_icon_url_override($hook, $type, $returnvalue, $params) {
@@ -44,6 +45,14 @@ function metatags_user_icon_url_override($hook, $type, $returnvalue, $params) {
                return "_graphics/icons/user/default{$size}.gif";
           }
      }
+}
+
+function metatags_view_guid($hook, $type, $vars, $params) {
+    if (isset($vars['guid']) && get_input('guid', false) === false) {
+        set_input('guid', $vars['guid']);
+    }
+
+    return $vars;
 }
 
 elgg_register_event_handler('init','system','metatagsgen_init');
