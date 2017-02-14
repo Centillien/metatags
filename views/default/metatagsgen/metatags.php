@@ -104,6 +104,8 @@ switch ($context) {
         }
         break;
     case 'blog':
+    case 'file':
+    case 'pages':
         if (!empty($user->name)) {
             $meta_description = urldecode(html_entity_decode(strip_tags($my_page_entity->excerpt)));
             $meta_description = str_replace(array(
@@ -112,7 +114,8 @@ switch ($context) {
             ), '', $meta_description);
             $title = $title . " from " . $user->name . " - " . $user->location;
         } else {
-            $meta_description = $site_name . " Blogs. This page provides a partial list of all blogs";
+            $title_context = substr($context, -1, 1) == 's' ? $context : $context . 's';
+            $meta_description = ucfirst($context) . " list: " . $site_name . ". This page provides a partial list of all {$title_context}";
             $title = $title . " - " . $site_name;
         }
         break;
