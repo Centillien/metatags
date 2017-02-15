@@ -35,26 +35,24 @@ switch ($context) {
         $meta_description = elgg_get_plugin_setting("mainpage_description", "metatags");
         $meta_description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($meta_description))))));
         break;
-    case 'groups':
-        $title = $title . " - " . $site_name . " - Networking Groups";
+    case 'about':
+        $title = "Over Elgg";
+        $meta_description = "Elgg is een sociaal intranet applicatie. We bieden daarmee de kracht van social media aan in het eigen bedrijf.";
         break;
-    case 'bookmarks':
-        if (!empty($user->name)) {
-            $clear = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
-            $meta_description = substr($clear, 0, 200);
-            $meta_description = str_replace(array(
-                "\r",
-                "\n"
-            ), '', $meta_description);
-            $title = $title . " from " . $user->name . " - " . $user->location;
-        } else {
-            $meta_description = "Bookmarks on " . $site_name . " You can use this to share interesting links with other people or friends or just for yourself";
-            $title = $title . " - " . $site_name . " - Bookmarks";
-        }
+    case 'terms':
+        $title = "NetCare algemene voorwaarden";
+        $meta_description = "Het gebruik van de Elgg demo site is gratis.Deze site is een demonstratie omgeving die volledig functioneel is en u mag naar hartelust experimenteren.";
+        break;
+    case 'privacy':
+        $title = "Privacy beleid";
+        $meta_description = "Privacy is gewaarborgd voor zover de gebruiker informatie zelf niet publiek maakt.";
+        break;
+    case 'groups':
+        $title = $title . " - " . $site_name . " - Netwerk groepen";
         break;
     case 'members':
         switch ($title) {
-            case 'Popular Members':
+            case 'Meest populaire leden':
                 $options['relationship'] = 'friend';
                 $options['inverse_relationship'] = false;
                 $options['offset'] = $offset;
@@ -65,7 +63,7 @@ switch ($context) {
                     $u->name = str_replace(',', "", $u->name);
                     $meta_description = $meta_description . "" . $u->name . ", ";
                 }
-                $title = $title . " - " . $site_name . " - Social Network";
+                $title = $title . " - " . $site_name . " - Werken met plezier";
                 break;
         }
         break;
@@ -81,7 +79,7 @@ switch ($context) {
                     "\r",
                     "\n"
                 ), '', $briefdescription);
-                $meta_description = substr($briefdescription, 0, 150) . " - " . $user->name . " is a registered member on $site_name";
+                $meta_description = substr($briefdescription, 0, 150) . " - " . $user->name . " is lid van  $site_name";
                 $title = $user->name . " - " . $user->location;
                 break;
             case (!empty($user->description)):
@@ -90,7 +88,7 @@ switch ($context) {
                     "\r",
                     "\n"
                 ), '', $description);
-                $meta_description = substr($description, 0, 133) . " - " . $user->name . " is a registered member on $site_name";
+                $meta_description = substr($description, 0, 133) . " - " . $user->name . " is lid van $site_name";
                 $title = $user->name . " - " . $user->location;
                 break;
             case (!empty($user->briefdescription)):
@@ -99,15 +97,18 @@ switch ($context) {
                     "\r",
                     "\n"
                 ), '', $briefdescription);
-                $meta_description = substr($briefdescription, 0, 133) . " - " . $user->name . " is a registered member on $site_name";
+                $meta_description = substr($briefdescription, 0, 133) . " - " . $user->name . " is lid van $site_name";
                 break;
         }
         break;
     case 'blog':
     case 'file':
+    case 'videos':
+    case 'bookmarks':
     case 'pages':
         if (!empty($user->name)) {
-            $meta_description = urldecode(html_entity_decode(strip_tags($my_page_entity->excerpt)));
+	    $meta_description = elgg_get_excerpt($page->description);
+	    $meta_description = urldecode(html_entity_decode(strip_tags($meta_description)));
             $meta_description = str_replace(array(
                 "\r",
                 "\n"
@@ -115,13 +116,15 @@ switch ($context) {
             $title = $title . " from " . $user->name . " - " . $user->location;
         } else {
             $title_context = substr($context, -1, 1) == 's' ? $context : $context . 's';
-            $meta_description = ucfirst($context) . " list: " . $site_name . ". This page provides a partial list of all {$title_context}";
+            $meta_description = ucfirst($context) . " lijst: " . $site_name . ". Deze pagina geeft een overzicht van alle {$title_context}";
             $title = $title . " - " . $site_name;
         }
         break;
-    case 'market':
+   case 'demand':
+   case 'jobs':
+   case 'market':
         if (!empty($user->name)) {
-            $meta_description = elgg_get_excerpt($my_page_entity->description);
+            $meta_description = elgg_get_excerpt($page->description);
             $meta_description = urldecode(html_entity_decode(strip_tags($meta_description)));
             $meta_description = str_replace(array(
                 "\r",
@@ -130,22 +133,22 @@ switch ($context) {
             $meta_description = substr($meta_description, 0, 200);
             $title = $title . " - " . $user->name . " - " . $user->location;
         } else {
-            $meta_description = "$site_name advertising. Select the right category";
-            $title = $title . " - " . $site_name . " Social Network";
+            $meta_description = "$context op $site_name. ";
+            $title = $title . " - " . $site_name . " - Werken met plezier";
         }
         break;
     case 'thewire':
         if (!empty($user->name)) {
             $title = $title . " - " . $user->location;
             $message = "these short messages";
-            $meta_description = $user->name . " wants to share " . $message . " with you on $site_name";
+            $meta_description = $user->name . " deeelt " . $message . " met je op $site_name";
         } else {
-            $meta_description = "$site_name microblogs. This page provides a small list of all short messages of max 140 characters that members published";
-            $title = $title . " - $site_name - Business Social Network";
+            $meta_description = "$site_name microblogs. Een lijst weergave van korte berichten";
+            $title = $title . " - $site_name - Werken met plezier";
         }
         break;
     case 'group_profile':
-        $meta_description = $user->name . " is a group on $site_name. If you want to join this group, you need to register on $site_name";
+        $meta_description = $user->name . " is een groep op $site_name. Als je lid wilt worden van deze groep, moet je eerst registreren op $site_name";
         break;
     case 'friends':
         if (!empty($user->name)) {
@@ -162,20 +165,20 @@ switch ($context) {
             $options['limit'] = 7;
             $friends = elgg_get_entities_from_relationship($options);
             if ($friends) {
-                $meta_description = $user->name . " has " . $num_friends . "  friends on $site_name. Maybe you also know " . $user->name . " or ";
+                $meta_description = $user->name . " heeft " . $num_friends . "  connecties op  $site_name. Misschien ken je " . $user->name . " ook of ";
                 foreach ($friends as $u) {
                     $u->name = str_replace(',', "", $u->name);
                     $meta_description = $meta_description . "" . $u->name . ", ";
                 }
             } else {
-                $meta_description = $user->name . " has no friends yet on $site_name. Maybe you are a friend of " . $user->name . ". Join $site_name and get connected";
+                $meta_description = $user->name . " heeft nog geen connecties op  $site_name. Misschien ken je " . $user->name . ". Registreer op  $site_name en maak een connectie";
             }
-            $title = $title . " - $site_name - Social Network";
+            $title = $title . " - $site_name - Werken met plezier";
         }
         break;
-    case (empty($user->name)):
-        $meta_description = $site_name . " - " . elgg_get_plugin_setting("mainpage_description", "metatags");
-        $title = $site_name . " - " . elgg_get_plugin_setting("mainpage_title", "metatags");;
+    case (empty($user->name) || ($user->name== $site_name)):
+        $meta_description = elg_get_plugin_setting("mainpage_description", "metatags");
+        $title = elg_get_plugin_setting("mainpage_title", "metatags");;
         break;
     default:
         $clear = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
@@ -198,6 +201,11 @@ $contexts = array(
     'null',
     ''
 );
+
+//Replace double quotes to single quotes
+$meta_description = str_replace('"', "'", $meta_description);
+$title = str_replace('"', "'", $title);
+
 if ($meta_description) {
     ?>
     <meta name="description" property="og:description" content="<?php
@@ -254,4 +262,3 @@ if ($tags && !in_array($context, $contexts)) {
 } else {
     echo elgg_get_plugin_setting("mainpage_keywords", "metatags");
 }
-?>"/>

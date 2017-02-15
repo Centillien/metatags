@@ -8,19 +8,16 @@
  * Website: https://www.centillien.com
  */
 
+require_once(dirname(__FILE__) . '/lib/functions.php');
+
 elgg_register_event_handler('init', 'system', 'metatagsgen_init');
 
 function metatagsgen_init()
 {
 
+    elgg_register_library('elgg:metatags', elgg_get_plugins_path() . 'metatags/lib/metadescription.php');
+
     elgg_extend_view('page/elements/head', 'metatagsgen/metatags');
-    elgg_extend_view("object/blog", "metatagsgen/track_page_entity", 400);
-    if (elgg_is_active_plugin("market")) {
-        elgg_extend_view("object/market", "metatagsgen/track_page_entity");
-    }
-    if (elgg_is_active_plugin("anypage")) {
-        elgg_extend_view("object/anypage", "metatagsgen/track_page_entity");
-    }
 
     //Static caching of icons
     $cloudflare = elgg_get_plugin_setting("cloudflare", "metatags");
@@ -30,7 +27,6 @@ function metatagsgen_init()
 
     //Unregister systemlog since it is not very usefull
     elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
-
     elgg_register_plugin_hook_handler('view_vars', 'all', 'metatags_view_guid');
 }
 
