@@ -262,3 +262,4 @@ if ($tags && !in_array($context, $contexts)) {
 } else {
     echo elgg_get_plugin_setting("mainpage_keywords", "metatags");
 }
+?>"/>
