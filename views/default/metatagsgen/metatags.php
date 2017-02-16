@@ -177,8 +177,8 @@ switch ($context) {
         }
         break;
     case (empty($user->name) || ($user->name== $site_name)):
-        $meta_description = elg_get_plugin_setting("mainpage_description", "metatags");
-        $title = elg_get_plugin_setting("mainpage_title", "metatags");;
+        $meta_description = elgg_get_plugin_setting("mainpage_description", "metatags");
+        $title = elgg_get_plugin_setting("mainpage_title", "metatags");;
         break;
     default:
         $clear = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9\_|+.-]/', ' ', urldecode(html_entity_decode(strip_tags($page->description))))));
