@@ -7,15 +7,15 @@
 
 return array(
 	//Mainpage settings
-	'metatags:mainpage:title' => 'Provide a catchy title for the index page',
-	'metatags:mainpage:keywords' => 'Provide some keywords that would describe your site. They will be used for the frontpage',
-	'metatags:mainpage:description' => 'Provide a catching description for your site. Tip, use existing words that are on the main page for better results',
-	'metatags:mainpage:image' => 'Give the filename of an image that represents your site. This file must located be in the folder /_graphics',
-	'metatags:cloudflare' => 'Do you want fixed avatar URLs ?',
+	'metatags:mainpage:title' => 'Proporcionar un título pegadizo para la página de índice',
+	'metatags:mainpage:keywords' => 'Proporcionar algunas palabras clave que describen su sitio. Se utilizarán para la primera página',
+	'metatags:mainpage:description' => 'Proporcione una descripción llamativa para su sitio. Consejo, use las palabras existentes que están en la página principal para obtener mejores resultados',
+	'metatags:mainpage:image' => 'Dé el nombre de archivo de una imagen que representa su sitio. Este archivo debe encontrarse en la carpeta / _graphics',
+	'metatags:cloudflare' => '¿Quieres URL de avatar fijo?',
     
 	//setttings voor plugins
-	'blog:message:description' => 'published a  news article',
-	'blog:title:preformat' => 'Blog section - %s',
-	'market:message:description' => 'wants to share this offering',
-	'market:title:preformat' => '%s - advertising',		
+	'blog:message:description' => 'publicó un artículo',
+	'blog:title:preformat' => 'Sección del blog - %s',
+	'market:message:description' => 'Quiere compartir esta oferta',
+	'market:title:preformat' => '%s - publicidad',		
 );
