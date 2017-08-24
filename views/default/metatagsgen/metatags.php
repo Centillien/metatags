@@ -255,7 +255,7 @@ if (!empty($user->name) && !in_array($context, $contexts)) {
 <link rel="author" href="<?php
 echo $user->website;
 ?>"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="index,noarchive"/>
 <meta name="keywords" content="<?php
 if ($tags && !in_array($context, $contexts)) {
     echo $context, ",", $tags, ",", $user->name, ",", $user->location;
